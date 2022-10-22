@@ -8,9 +8,9 @@ import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
 
-const Users = () => {
+const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [professions, setProfession] = useState();
+  const [professions, setProfession] = useState(undefined);
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
@@ -58,9 +58,9 @@ const Users = () => {
   if (users) {
     const filteredUsers = selectedProf
       ? users.filter(
-        (user) =>
-          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-      )
+          (user) =>
+            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+        )
       : users;
 
     const count = filteredUsers.length;
@@ -95,7 +95,6 @@ const Users = () => {
               selectedSort={sortBy}
               onDelete={handleDelete}
               onToggleBookMark={handleToggleBookMark}
-
             />
           )}
 
@@ -110,11 +109,11 @@ const Users = () => {
         </div>
       </div>
     );
-  };
+  }
   return "Loading";
 };
-Users.propTypes = {
+UsersList.propTypes = {
   users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
