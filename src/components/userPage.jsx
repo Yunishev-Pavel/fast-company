@@ -10,7 +10,8 @@ const UserPage = ({ userId }) => {
   useEffect(() => {
     api.users.getById(userId).then((data) => setUser(data));
   }, []);
-  const handleSave = () => {
+
+  const handleClick = () => {
     history.push("/users");
   };
 
@@ -20,15 +21,15 @@ const UserPage = ({ userId }) => {
         <h1>{user.name}</h1>
         <h2>Профессия: {user.profession.name}</h2>
         <QualitiesList qualities={user.qualities} />
-        <div>Встретился {user.completedMeetings}</div>
-        <h4>Rate: {user.rate}</h4>
-        <button className="btn btn-outline-dark mt-2" onClick={handleSave}>
+        <p>Встретился {user.completedMeetings}</p>
+        <h2>Rate: {user.rate}</h2>
+        <button className="mt-2" onClick={handleClick}>
           Все пользователи
         </button>
       </div>
     );
   }
-  return "Loading...";
+  return <h1>Loading...</h1>;
 };
 
 UserPage.propTypes = {
