@@ -1,9 +1,11 @@
 import React from "react";
-import Login from "./components/layouts/login";
-import Main from "./components/layouts/main";
-import NavBar from "./components/navBar";
-import Users from "./components/layouts/users";
+import Login from "./layouts/login";
+import Main from "./layouts/main";
+import NavBar from "../src/components/ui/navBar";
+import Users from "./layouts/users";
+
 import { Switch, Route, Redirect } from "react-router-dom";
+// import Edit from "./components/page/edit";
 
 function App() {
   return (
@@ -11,9 +13,9 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/" exact component={Main} />
-        <Route path="/login" component={Login} />
-        <Route path="/users/:userId?" component={Users} />
-        <Redirect to="Loading" />
+        <Route path="/login/:type?" component={Login} />
+        <Route path="/users/:userId?/:edit?" component={Users} />
+        <Redirect to="Loading..." />
       </Switch>
     </div>
   );
