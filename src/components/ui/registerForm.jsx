@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback,useMemo  } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import api from "../../api";
@@ -60,13 +60,8 @@ const RegisterForm = () => {
       setQualities(qualitiesList);
     });
   }, []);
-  const handleChange = (target) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value
-    }));
-  };
-  const validatorConfig = {
+  
+ const validatorConfig = useMemo(() => ({
     email: {
       isRequired: {
         message: "Электронная почта обязательна для заполнения"
@@ -101,16 +96,27 @@ const RegisterForm = () => {
           "Вы не можете использовать наш сервис без подтверждения лицензионного соглашения"
       }
     }
-  };
-  useEffect(() => {
-    validate();
-  }, [data]);
-  const validate = () => {
+}), [])
+ 
+    const validate = useCallback(() => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
     return Object.keys(errors).length === 0;
-  };
+  }, [data,validatorConfig]);
+
+  useEffect(() => {
+    validate();
+  }, [validate,validatorConfig]);
+
+
   const isValid = Object.keys(errors).length === 0;
+
+  const handleChange = (target) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -173,7 +179,7 @@ const RegisterForm = () => {
         name="licence"
         error={errors.licence}
       >
-        Подтвердить <a>лицензионное соглашение</a>
+        Подтвердить <span>лицензионное соглашение</span>
       </CheckBoxField>
       <button
         className="btn btn-primary w-100 mx-auto"

@@ -28,7 +28,7 @@ const UserTable = ({
       path: "completedMeetings",
       name: "Встретился, раз"
     },
-    rate: { path: "rate", name: "оценка" },
+    rate: { path: "rate", name: "Оценка" },
     bookmark: {
       path: "bookmark",
       name: "Избранное",

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import api from "../../../api";
 import Qualities from "../../ui/qualities";
 import PropTypes from "prop-types";
 
 const UserPage = ({ userId }) => {
   const [user, setUser] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     api.users.getById(userId).then((data) => setUser(data));
-  }, []);
+  }, [userId]);
 
   const handleClick = () => {
-    history.push(`/users/${userId}/edit`);
+    navigate.push(`/users/${userId}/edit`);
   };
 
   if (user) {

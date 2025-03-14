@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback,useMemo} from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import CheckBoxField from "../common/form/checkBoxField";
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
-  const [errors, setErorrs] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleChange = (target) => {
     setData((prevState) => ({
@@ -14,7 +14,7 @@ const LoginForm = () => {
     }));
   };
 
-  const validatorConfig = {
+const validatorConfig = useMemo(() => ({
     email: {
       isRequired: { message: "Электронная почта обязательна для заполнения" },
       isEmail: {
@@ -34,17 +34,19 @@ const LoginForm = () => {
         value: 8
       }
     }
-  };
+}), [])
+
+
+    const validate = useCallback(() => {
+    const errors = validator(data, validatorConfig);
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  }, [data,validatorConfig]);
 
   useEffect(() => {
     validate();
-  }, [data]);
-  const validate = () => {
-    const errors = validator(data, validatorConfig);
-    setErorrs(errors);
-    return Object.keys(errors).length === 0;
-  };
-
+  }, [validate]);
+  
   const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {

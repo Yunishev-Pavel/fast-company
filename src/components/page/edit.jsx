@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import api from "../../../src/api";
 import TextField from "../../components/common/form/textField";
 import SelectField from "../../components/common/form/selectField";
@@ -8,7 +8,7 @@ import MultiSelectField from "../../components/common/form/multiSelectField";
 import PropTypes from "prop-types";
 
 const Edit = ({ userId }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     name: "",
@@ -27,7 +27,7 @@ const Edit = ({ userId }) => {
       const qualitiesUser = [];
       user.qualities.forEach((quality) =>
         qualitiesUser.push({ label: quality.name, value: quality._id })
-      );
+      [userId]);
 
       setUser({
         ...user,
@@ -51,7 +51,7 @@ const Edit = ({ userId }) => {
       }));
       setQualities(qualitiesList);
     });
-  }, []);
+  }, [userId]);
 
   const getProfessionById = (id) => {
     for (const prof of professions) {
@@ -88,7 +88,7 @@ const Edit = ({ userId }) => {
         profession: getProfessionById(profession),
         qualities: getQualities(qualities)
       })
-      .then((data) => history.push(`/users/${data._id}`));
+      .then((data) => navigate.push(`/users/${data._id}`));
   };
 
   const handleChange = (target) => {

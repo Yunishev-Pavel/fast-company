@@ -128,7 +128,7 @@ const UsersListPage = () => {
       </div>
     );
   }
-  return "Loading";
+  return "Loading...";
 };
 UsersListPage.propTypes = {
   users: PropTypes.array
